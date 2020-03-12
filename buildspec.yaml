@@ -10,6 +10,13 @@ phases:
       - cd ContactDetailsFunction
       - gradle build
 
+reports:
+  arn:aws:codebuild:eu-west-1:382959638855:report-group/greenhills-server:
+    files:
+      - "**/*"
+    base-directory: 'ContactDetailsFunction/build/reports'
+    discard-paths: no
+
 artifacts:
   files:
     - ContactDetailsFunction/build/libs/ContactDetailsFunction-1.0-SNAPSHOT.jar
