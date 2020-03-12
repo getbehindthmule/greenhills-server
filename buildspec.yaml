@@ -14,11 +14,11 @@ reports:
   arn:aws:codebuild:eu-west-1:382959638855:report-group/greenhills-server-report-1:
     files:
       - "**/*"
-    base-directory: 'build/reports'
+    base-directory: 'ContactDetailsFunction/build/reports'
     discard-paths: no
 artifacts:
   files:
-    - build/libs/ContactDetailsFunction-1.0-SNAPSHOT.jar
+    - ContactDetailsFunction/build/libs/ContactDetailsFunction-1.0-SNAPSHOT.jar
   name: greenhills-server-contct-details-$(date +%Y-%m-%d)
   discard-paths: yes
 cache:
