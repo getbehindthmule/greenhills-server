@@ -1,21 +1,18 @@
-# AWS
+# Greenhills Server
 
-This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
+This project contains a greenhills serverless application, demonstrating integration with CodeBuild, codeDeploy and CodePipeline.
 
-- HelloWorldFunction/src/main - Code for the application's Lambda function.
-- events - Invocation events that you can use to invoke the function.
-- HelloWorldFunction/src/test - Unit tests for the application code. 
-- template.yaml - A template that defines the application's AWS resources.
+It was used as a testbed to familiarise the steps required for these deployment concepts in AWS
 
-The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
+The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can 
+update the template to add AWS resources through the same deployment process that updates your application code.
 
-If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.  
-The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through debugging experience for Lambda function code. See the following links to get started.
+The integrated development environment (IDE) can be used to build and test the application using the AWS Toolkit, but this is a stepping stone to understanding the SAM cli deployment 
+options.
+The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through 
+debugging experience for Lambda function code. See the following link to get started.
 
-* [PyCharm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
 * [IntelliJ](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
-* [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
 
 ## Deploy the sample application
 
@@ -27,22 +24,23 @@ To use the SAM CLI, you need the following tools.
 * Java8 - [Install the Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
 
-To build and deploy your application for the first time, run the following in your shell:
+To fully control the  build and deployment of the application, run the following, with the obvious changes to
+directory strucutres, etc:
 
 ```bash
-sam build
-sam deploy --guided
+sam build   --template /Users/gerardsavage/dev/greenhills-server/template.yaml  --build-dir /Users/gerardsavage/dev/greenhills-server/.aws-sam/build
+sam package --template-file /Users/gerardsavage/dev/greenhills-server/.aws-sam/build/template.yaml --output-template-file /Users/gerardsavage/dev/greenhills-server/.aws-sam/build/packaged-template.yaml --s3-bucket greenhills-server
+sam deploy --template-file /Users/gerardsavage/dev/greenhills-server/.aws-sam/build/packaged-template.yaml --stack-name greenhills-server --capabilities CAPABILITY_IAM --region eu-west-1 --s3-bucket greenhills-server
+
 ```
 
-The first command will build the source of your application. The second command will package and deploy your application to AWS, with a series of prompts:
+The first command prepares the two lambdas in the project for deployment (java lambda under ContactDetailsFunction, nodejs lambda on the root) with updated template.yaml under
+.aws-sam directory
+The second command uploads the corresponding lambda zip files onto the appropriate S3 bucket
+The third command creates the cloudformation stack that will define the API Gateway, Lambdas and CodeDeploy artifacts, with associated Roles, etc
+**Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
 
-* **Stack Name**: The name of the stack to deploy to CloudFormation. This should be unique to your account and region, and a good starting point would be something matching your project name.
-* **AWS Region**: The AWS region you want to deploy your app to.
-* **Confirm changes before deploy**: If set to yes, any change sets will be shown to you before execution for manual review. If set to no, the AWS SAM CLI will automatically deploy application changes.
-* **Allow SAM CLI IAM role creation**: Many AWS SAM templates, including this example, create AWS IAM roles required for the AWS Lambda function(s) included to access AWS services. By default, these are scoped down to minimum required permissions. To deploy an AWS CloudFormation stack which creates or modified IAM roles, the `CAPABILITY_IAM` value for `capabilities` must be provided. If permission isn't provided through this prompt, to deploy this example you must explicitly pass `--capabilities CAPABILITY_IAM` to the `sam deploy` command.
-* **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
-
-You can find your API Gateway Endpoint URL in the output values displayed after deployment.
+You can find the API Gateway Endpoint URL in the output values displayed after deployment.
 
 ## Use the SAM CLI to build and test locally
 

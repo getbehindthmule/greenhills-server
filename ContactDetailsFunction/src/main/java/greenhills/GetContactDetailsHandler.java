@@ -12,7 +12,7 @@ public class GetContactDetailsHandler implements RequestHandler<Object, GatewayR
 
     private static final Gson GSON = new Gson();
     private final static String EMAIL = "contact@greenhillsconsultancy.co.uk";
-    private final static String PHONE = "074";
+    private final static String PHONE = "PHONE";
 
 
     @Override
