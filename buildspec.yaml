@@ -10,7 +10,7 @@ phases:
     commands:
       - gradle -v
       - gradle -version
-      - chmod +x gradlew
+      - gradle wrapper
       - ./gradlew -v
       - ./gradlew -version
 
