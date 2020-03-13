@@ -6,6 +6,12 @@ phases:
       java: corretto8
       nodejs: 12
 
+  pre_build:
+    - gradle -v
+    - gradle -version
+    - ./gradlew -v
+    - ./gradlew -version
+
   build:
     commands:
       - sam build   --template template.yaml  --build-dir .aws-sam/build
