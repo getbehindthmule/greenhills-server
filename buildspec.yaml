@@ -7,10 +7,11 @@ phases:
       nodejs: 12
 
   pre_build:
-    - gradle -v
-    - gradle -version
-    - ./gradlew -v
-    - ./gradlew -version
+    commands:
+      - gradle -v
+      - gradle -version
+      - ./gradlew -v
+      - ./gradlew -version
 
   build:
     commands:
