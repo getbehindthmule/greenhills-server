@@ -8,11 +8,9 @@ phases:
 
   pre_build:
     commands:
-      - pwd
       - cd ContactDetailsFunction
       - gradle wrapper
       - cd ..
-      - pwd
 
   build:
     commands:
@@ -24,7 +22,7 @@ phases:
 
 artifacts:
   files:
-    - packaged-template.yml
+    - packaged-template.yaml
 
 cache:
   paths:

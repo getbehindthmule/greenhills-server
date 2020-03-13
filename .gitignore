@@ -4,6 +4,8 @@
 *.iml
 */build/**
 
+packaged-template.yaml
+
 
 # Compiled class file
 *.class
