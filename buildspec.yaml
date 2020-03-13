@@ -5,10 +5,13 @@ phases:
     runtime-versions:
       java: corretto8
       nodejs: 12
+
   build:
     commands:
-      - sdk install gradle
       - sam build   --template template.yaml  --build-dir .aws-sam/build
+
+  post_build:
+    commands:
       - sam package --template-file .aws-sam/build/template.yaml --output-template-file packaged-template.yaml --s3-bucket greenhills-server
 
 artifacts:
