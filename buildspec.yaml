@@ -7,8 +7,12 @@ phases:
       nodejs: 12
   build:
     commands:
-      - cd ContactDetailsFunction
-      - gradle build
+      - sam build   --template template.yaml  --build-dir .aws-sam/build
+      - sam package --template-file .aws-sam/build/template.yaml --output-template-file packaged-template.yaml --s3-bucket greenhills-server
+
+artifacts:
+  files:
+    - packaged-template.yml
 
 cache:
   paths:
