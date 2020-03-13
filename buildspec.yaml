@@ -8,11 +8,11 @@ phases:
 
   pre_build:
     commands:
-      - gradle -v
-      - gradle -version
+      - pwd
+      - cd ContactDetailsFunction
       - gradle wrapper
-      - ./gradlew -v
-      - ./gradlew -version
+      - cd ..
+      - pwd
 
   build:
     commands:
