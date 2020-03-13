@@ -38,9 +38,17 @@ The first command prepares the two lambdas in the project for deployment (java l
 .aws-sam directory
 The second command uploads the corresponding lambda zip files onto the appropriate S3 bucket
 The third command creates the cloudformation stack that will define the API Gateway, Lambdas and CodeDeploy artifacts, with associated Roles, etc
-**Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
+**Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` 
+without parameters to deploy changes to your application.
 
 You can find the API Gateway Endpoint URL in the output values displayed after deployment.
+
+## Using CodeBuild
+After initial testing, recommend that the latest Ubuntu image is selected for the build environment. 
+
+There is a **pre-build** command stage required to generate a functioning gradle wrapper for the ContactDetailsFunction. Without this, the gradlew command failed to run. The **build** 
+command executes the `sam build` command, populating the lambda artifacts under the .aws_sam directory. The **post-build** stage executes the `sam package` command, uploading the 
+lambda artifacts onto the S3 bucket. Finally, the `packaged-template.yaml` artifact is uploaded to the S3 bucket
 
 ## Use the SAM CLI to build and test locally
 
