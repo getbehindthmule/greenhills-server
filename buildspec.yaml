@@ -24,7 +24,7 @@ phases:
 artifacts:
   files:
     - packaged-template.yaml
-    discard-paths: yes
+  discard-paths: yes
 
 cache:
   paths:
