@@ -25,7 +25,7 @@ public class GetContactDetailsHandlerTest {
     @Test
     public void handleRequest() {
         // arrange
-        String expectedBody = "{\"phoneNumber\":\"074 1500 1600\",\"emailAddress\":\"contact@greenhillsconsultancy.co.uk\"}";
+        String expectedBody = "{\"phoneNumber\":\"+ 44 74 1500 1600\",\"emailAddress\":\"contact@greenhillsconsultancy.co.uk\"}";
 
         // act
         final GatewayResponse gatewayResponse = getContactDetailsHandler.handleRequest(null, null);
